@@ -1,0 +1,51 @@
+import math 
+palindromes = []
+pairs  = set()
+nums = set()
+def checkPalindromic(n):
+    stringN = str(n)
+    length = len(stringN)
+    maxCheck = ((length-1) / 2) + 1
+    pos = 0
+    checkNum = 0
+    if ((length) %2) == 0:#if even
+        while checkNum < maxCheck:
+            if(stringN[pos] != stringN[(length-1)-pos]):
+                return False
+            else:
+                checkNum += 1
+                pos += 1
+                
+    elif ((length) %2) != 0: #if odd
+        mid = (length+1) / 2
+        #disregard the middle digit
+        while checkNum < maxCheck and pos < mid-1:
+            if(stringN[pos] != stringN[(length-1)-pos]):
+                return False
+            else:
+                checkNum += 1
+                pos += 1
+                
+
+    return True
+#the sum of consecutive squares is (n(n+1)(2n+1)/6) - what it's being offset by
+
+
+def findSum(N):
+    total = 0
+    for n in range(0,int(math.sqrt(N))):
+        result = 1
+        for m in range(0,n):
+            result = ((n*(n+1)*((2*n)+1)) / 6) - ((m*(m+1)*((2*m)+1)) / 6)
+            if result >= N or result == n*n:
+                m = n # breaks the for loop
+            else:
+                if(checkPalindromic(int(result))) is True and (m,n) not in pairs and result not in nums:
+                    total = total + result
+                    print(total)
+                    pairs.add((m,n))
+                    nums.add(result)
+    print(total)
+    print("done")
+
+findSum(10 ** 8)
