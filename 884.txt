@@ -1,0 +1,25 @@
+
+
+
+
+
+import math
+
+def D(n):
+    sqrtN = int(n ** (1/3))#largest cube root
+    count = 0
+    currentN = n
+    while currentN != 0:
+        currentN = currentN - (sqrtN ** 3)
+        sqrtN = int(currentN ** (1/3))
+        count += 1
+    return count
+
+def S(N):
+    sumD = 0
+    for i in range (2,N-1):
+        sumD = sumD + D(i)
+        print(sumD)
+    print(sumD)
+
+#works for S(100), inefficient for 10 ** 17
