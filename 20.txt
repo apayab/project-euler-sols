@@ -1,0 +1,11 @@
+import math
+
+n = math.factorial(100)
+strN = str(n)
+total = 0
+
+for i in range (len(strN)):
+    total = total + int(strN[i])
+
+print(total)
+    
