@@ -1,0 +1,94 @@
+
+import math
+#find the largest integer
+q = 2
+p = 2
+
+previousDistinct = set()
+previousPairs = set() 
+primeList = []
+def M(N):
+    generatePrimeList(N)
+    sumM = 0
+    for i in range(0, len(primeList)):
+        p = primeList[i]
+        for j in range(i+1,len(primeList)):
+            q = primeList[j]
+            if((p*q) <= N):
+                pair = tuple(sorted((p,q)))
+                greatest = findAllMultiples(p,q,N)
+                if(greatest not in previousDistinct
+                and pair not in previousPairs
+                ) :
+                #checks if p and q are the only primes, are different, and i is not already in the list
+                    previousDistinct.add(greatest)
+                    previousPairs.add(pair)
+                    sumM = sumM + greatest
+                    print("current greatest", greatest, " with factors ", p ," and ", q)
+                            #if it isn't, then ignore it and move on to the next
+                    
+    print(sumM)                     
+
+
+                
+def checkNumPrime(n):
+    prime = True
+    rootN = int(math.sqrt(n))
+    
+    for i in range(2, rootN+1):
+        if n%i == 0:#disproves as prime
+            prime = False
+        
+    if prime == True:
+        return True
+    else:
+        return False
+
+def checkOnlyPrimes(i, p, q):
+    dividedByBoth = False
+
+    if(p==q or i == 1):#p and q must be different
+        return False
+
+    else:
+        result = i
+        if(i%p==0 and i%q ==0):
+            while(result % p == 0):
+                result = result/p
+                dividedByBoth = True
+            while(result % q == 0):
+                result = result/q
+            if(result == 1):
+                return True
+            else:
+                return False
+        else:
+            return False
+    
+def findAllMultiples(p,q,N):
+   
+    greatestResult = 0
+    a = 0
+    while p**a <= N:
+        b = 0
+        result = 0
+        while result <= N:
+            result = p**a * q**b
+            b = b + 1
+            if(result > N):
+                break
+            elif(result > greatestResult and result%q ==0 and result%p == 0):
+                greatestResult = result
+        a = a + 1
+    return greatestResult
+            
+            
+
+def generatePrimeList(N):
+    for i in range(N, 1, -1):
+        if(checkNumPrime(i) == True):
+            primeList.append(i)
+
+
+
+M(100)
